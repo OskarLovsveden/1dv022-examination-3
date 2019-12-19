@@ -1,19 +1,18 @@
 const desktopWindowTemplate = document.createElement('template')
 desktopWindowTemplate.innerHTML = `
 <style>
-    #desktop-window {
+#desktopWindow {
     display: inline-block;
     border: solid black 2px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    background-color: whitesmoke;
 }
 </style>
 <div id="desktopWindow">
 </div>
 `
 
-export class DesktopWindow extends window.HTMLElement {
+export default class DesktopWindow extends window.HTMLElement {
   constructor () {
     super()
 

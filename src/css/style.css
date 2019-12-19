@@ -1,22 +1,10 @@
-html {
+/* html {
     background: url(../image/bg.jpg) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-}
-
-#top-window {
-    display: block;
-    min-width: 200px;
-}
-
-#top-window img {
-    width: 30px;
-    margin-left: 5px;
-    margin-top: 5px;
-}
-
+} */
 
 #game-div {
     display: block;
