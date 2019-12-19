@@ -23,6 +23,14 @@ export default class DesktopWindow extends window.HTMLElement {
 
     this._desktopWindow = this.shadowRoot.querySelector('#desktopWindow')
   }
+
+  connectedCallback () {
+    const newTop = document.createElement('top-window')
+    this._desktopWindow.appendChild(newTop)
+
+    const newGame = document.createElement('game-unknown')
+    this._desktopWindow.appendChild(newGame)
+  }
 }
 
 window.customElements.define('desktop-window', DesktopWindow)

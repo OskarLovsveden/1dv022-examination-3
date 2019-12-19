@@ -15,6 +15,14 @@ export class DesktopUI extends window.HTMLElement {
 
     this._desktopUI = this.shadowRoot.querySelector('#desktop')
   }
+
+  connectedCallback () {
+    const newWindow = document.createElement('desktop-window')
+    this._desktopUI.appendChild(newWindow)
+
+    const newTaskbar = document.createElement('desktop-taskbar')
+    this._desktopUI.appendChild(newTaskbar)
+  }
 }
 
 window.customElements.define('desktop-ui', DesktopUI)
