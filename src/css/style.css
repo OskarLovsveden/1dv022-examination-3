@@ -6,14 +6,6 @@ html {
     background-size: cover;
 }
 
-#desktop-window {
-    display: inline-block;
-    border: solid black 2px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    background-color: whitesmoke;
-}
-
 #top-window {
     display: block;
     min-width: 200px;
