@@ -1,7 +1,7 @@
 const chatAppTemplate = document.createElement('template')
 chatAppTemplate.innerHTML = `
 <style>
-#chatApp {
+#chatDiv {
     display: block;
 }
 .chat {
@@ -14,12 +14,10 @@ chatAppTemplate.innerHTML = `
 
 }
 </style>
-<div id="chatApp">
-    <div class="chat">
-        <div class="messages">
-        </div>
-        <textarea class="messageArea"></textarea>
+<div id="chatDiv">
+    <div class="messages">
     </div>
+    <textarea class="messageArea"></textarea>
 </div>
 `
 
@@ -51,8 +49,7 @@ export default class ChatApp extends window.HTMLElement {
     })
     this.shadowRoot.appendChild(chatAppTemplate.content.cloneNode(true))
 
-    this._chatApp = this.shadowRoot.querySelector('#chatApp')
-    this._chatApp.querySelector('.messages').appendChild(messageTemplate.content.cloneNode(true))
+    this._chatDiv = this.shadowRoot.querySelector('#chatDiv')
 
     this._socket = null
     this._address = 'ws://vhost3.lnu.se:20080/socket/'
@@ -60,7 +57,7 @@ export default class ChatApp extends window.HTMLElement {
   }
 
   connectedCallback () {
-    this._chatApp.addEventListener('keypress', (event) => {
+    this._chatDiv.addEventListener('keypress', (event) => {
       if (event.keyCode === 13) {
         this._sendMessage(event.target.value)
         event.target.value = ''
@@ -68,8 +65,8 @@ export default class ChatApp extends window.HTMLElement {
       }
     })
 
-    this._connect().then((socket) => {
-      this._sendMessage('yo')
+    this._connect().then(() => {
+      // this._sendMessage('yo')
     })
   }
 
@@ -90,8 +87,11 @@ export default class ChatApp extends window.HTMLElement {
         reject(new Error('Could not connect'))
       })
 
-      this._socket.addEventListener('message', () => {
-        this._printMessage()
+      this._socket.addEventListener('message', (event) => {
+        const message = JSON.parse(event.data)
+        if (message.type === 'message') {
+          this._printMessage(message)
+        }
       })
     })
   }
@@ -100,7 +100,7 @@ export default class ChatApp extends window.HTMLElement {
     const data = {
       type: 'message',
       data: text,
-      username: 'Username',
+      username: 'Ogge',
       channel: '',
       key: this._key
     }
@@ -113,8 +113,13 @@ export default class ChatApp extends window.HTMLElement {
     })
   }
 
-  _printMessage () {
+  _printMessage (message) {
+    const messageDiv = messageTemplate.content.cloneNode(true)
 
+    messageDiv.querySelector('.text').textContent = message.data
+    messageDiv.querySelector('.author').textContent = message.username
+
+    this._chatDiv.querySelector('.messages').appendChild(messageDiv)
   }
 }
 
