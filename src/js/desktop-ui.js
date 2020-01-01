@@ -4,7 +4,7 @@ desktopUiTemplate.innerHTML = `
 </div>
 `
 
-export class DesktopUI extends window.HTMLElement {
+export default class DesktopUI extends window.HTMLElement {
   constructor () {
     super()
 

@@ -17,7 +17,7 @@ topWindowTemplate.innerHTML = `
 </div>
 `
 
-export class TopWindow extends window.HTMLElement {
+export default class TopWindow extends window.HTMLElement {
   constructor () {
     super()
 

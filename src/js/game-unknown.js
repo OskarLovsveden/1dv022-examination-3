@@ -3,13 +3,16 @@ gameUnknownTemplate.innerHTML = `
 <style>
 #gameUnknown {
     display: block;
+    height: 200px;
+    width: 200px;
+    background-color: blue;
 }
 </style>
 <div id="gameUnknown">
 </div>
 `
 
-export class GameUnknown extends window.HTMLElement {
+export default class GameUnknown extends window.HTMLElement {
   constructor () {
     super()
 
