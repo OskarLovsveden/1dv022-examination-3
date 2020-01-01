@@ -29,8 +29,11 @@ export default class DesktopWindow extends window.HTMLElement {
     const newTop = document.createElement('top-window')
     this._desktopWindow.appendChild(newTop)
 
-    const newGame = document.createElement('game-unknown')
-    this._desktopWindow.appendChild(newGame)
+    const newChat = document.createElement('chat-app')
+    this._desktopWindow.appendChild(newChat)
+
+    // const newGame = document.createElement('game-unknown')
+    // this._desktopWindow.appendChild(newGame)
   }
 }
 
