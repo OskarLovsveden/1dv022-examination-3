@@ -80,14 +80,18 @@ export default class ChatApp extends window.HTMLElement {
         return
       }
 
-      try {
-        this._socket = new window.WebSocket(this._address)
-      } catch (error) {
-        reject(error)
-      }
+      this._socket = new window.WebSocket(this._address)
 
       this._socket.addEventListener('open', () => {
         resolve(this._socket)
+      })
+
+      this._socket.addEventListener('error', () => {
+        reject(new Error('Could not connect'))
+      })
+
+      this._socket.addEventListener('message', () => {
+        this._printMessage()
       })
     })
   }
