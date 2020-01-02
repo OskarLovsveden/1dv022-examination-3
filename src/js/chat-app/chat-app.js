@@ -2,41 +2,63 @@ const chatAppTemplate = document.createElement('template')
 chatAppTemplate.innerHTML = `
 <style>
 #chatDiv {
-    display: block;
+  display: block;
+  text-align: center;
 }
-.chat {
-
+#chatDiv p {
+  font-family: Verdana, Geneva, sans-serif;
+  color: #000000;
+  text-decoration: none;
+  font-style: normal;
+  font-variant: normal;
+  text-transform: none;
 }
-.messages {
-
+#chatDiv hr {
+  border: 1px black solid;
+  width: 90%;
 }
 .messageArea {
-
+  width: 90%;
+}
+.messageButton {
+  display: inline-block;
+  width: 90%;
+  text-align: center;
+  border: 1px blue solid;
 }
 </style>
 <div id="chatDiv">
-    <div class="messages">
-    </div>
-    <textarea class="messageArea"></textarea>
+  <div class="messages">
+  </div>
+  <hr>
+  <textarea class="messageArea"></textarea>
+  <div class="messageButton">
+    <p>Send</p>
+  </div>
 </div>
 `
 
 const messageTemplate = document.createElement('template')
 messageTemplate.innerHTML = `
 <style>
-#message {
-    display: block;
-}
-.text {
-
+.message {
+  margin: 1%;
+  text-align: left;
 }
 .author {
-
+  font-size: 1em;
+}
+.text {
+  display: inline-block;
+  padding: 3%;
+  border-radius: 15px;
+  background-color: blue;
+  margin: auto 0;
 }
 </style>
-<div id="message">
-    <p class="text"></p>
+<div class="message">
     <p class="author"></p>
+    <p class="text"></p>
 </div>
 `
 
@@ -101,13 +123,12 @@ export default class ChatApp extends window.HTMLElement {
       type: 'message',
       data: text,
       username: 'Ogge',
-      channel: '',
+      channel: 'test1',
       key: this._key
     }
 
     this._connect().then((socket) => {
       socket.send(JSON.stringify(data))
-      console.log('sending message...', text)
     }).catch((error) => {
       console.log('Something went wrong', error)
     })
@@ -116,8 +137,8 @@ export default class ChatApp extends window.HTMLElement {
   _printMessage (message) {
     const messageDiv = messageTemplate.content.cloneNode(true)
 
+    messageDiv.querySelector('.author').textContent = `${message.username}:`
     messageDiv.querySelector('.text').textContent = message.data
-    messageDiv.querySelector('.author').textContent = message.username
 
     this._chatDiv.querySelector('.messages').appendChild(messageDiv)
   }
