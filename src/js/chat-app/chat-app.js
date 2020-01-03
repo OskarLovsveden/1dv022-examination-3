@@ -62,7 +62,18 @@ messageTemplate.innerHTML = `
 </div>
 `
 
+/**
+ * Custom element for a chat application.
+ *
+ * @export
+ * @class ChatApp
+ * @extends {window.HTMLElement}
+ */
 export default class ChatApp extends window.HTMLElement {
+  /**
+   * Creates an instance of ChatApp.
+   * @memberof ChatApp
+   */
   constructor () {
     super()
 
@@ -92,6 +103,12 @@ export default class ChatApp extends window.HTMLElement {
     })
   }
 
+  /**
+   * Connects to chat application.
+   *
+   * @returns a resolved or rejected Promise.
+   * @memberof ChatApp
+   */
   _connect () {
     return new Promise((resolve, reject) => {
       if (this._socket && this._socket.readyState === 1) {
@@ -118,6 +135,12 @@ export default class ChatApp extends window.HTMLElement {
     })
   }
 
+  /**
+   * Sends message to the chat application. Connects to chat if not connected.
+   *
+   * @param {string} text - The text of a message
+   * @memberof ChatApp
+   */
   _sendMessage (text) {
     const data = {
       type: 'message',
@@ -134,6 +157,12 @@ export default class ChatApp extends window.HTMLElement {
     })
   }
 
+  /**
+   * Prints a message in the DOM.
+   *
+   * @param {string} message - The message to be sent
+   * @memberof ChatApp
+   */
   _printMessage (message) {
     const messageDiv = messageTemplate.content.cloneNode(true)
 
