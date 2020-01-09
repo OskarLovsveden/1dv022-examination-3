@@ -18,7 +18,7 @@ desktopTaskbarTemplate.innerHTML = `
 }
 </style>
 <div id="desktopTaskbar">
-      <img src="./image/chat.png" alt="chat">
+      <img id="chatApp" src="./image/chat.png" alt="chat">
       <img src="./image/fruit.png" alt="fruit">
   </div>
 `
@@ -33,6 +33,10 @@ export default class DesktopTaskbar extends window.HTMLElement {
     this.shadowRoot.appendChild(desktopTaskbarTemplate.content.cloneNode(true))
 
     this._desktopTaskbar = this.shadowRoot.querySelector('#desktopTaskbar')
+  }
+
+  connectedCallback () {
+
   }
 }
 

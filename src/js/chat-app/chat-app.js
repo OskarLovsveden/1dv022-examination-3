@@ -1,6 +1,8 @@
 const chatAppTemplate = document.createElement('template')
 chatAppTemplate.innerHTML = `
 <style>
+:host {
+  }
 #chatDiv {
   display: block;
   text-align: center;
