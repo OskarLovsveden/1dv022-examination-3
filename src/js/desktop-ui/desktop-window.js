@@ -5,7 +5,10 @@ desktopWindowTemplate.innerHTML = `
   position: absolute;
   left: 0;
   top: 0;
-  max-height: 500px;
+  min-height: 410px;
+  max-height: 410px;
+  min-width: 300px;
+  max-width: 300px;
   background-color: #f5f5f5;
   border: 2px solid lightgrey;
   border-radius: 5px 5px 0 0;
@@ -22,7 +25,7 @@ header img {
   padding: 0;
 }
 #desktopWindow {
-  background-color: white;
+  height: 370px;
 }
 </style>
 <header id="headerWindow">

@@ -4,7 +4,6 @@ chatAppTemplate.innerHTML = `
 :host {
   }
 #chatDiv {
-  display: block;
   text-align: center;
 }
 #chatDiv p {
@@ -20,23 +19,32 @@ chatAppTemplate.innerHTML = `
   width: 90%;
   margin: 0 auto;
 }
-.messageArea {
-  width: 90%;
+.messages {
+  background-color: white;
+  max-height: 250px;
+  overflow: auto;
 }
-.messageButton {
+.messageArea {
+  resize: none;
+  height: 50px;
+}
+.messageSend {
   display: inline-block;
   width: 90%;
   text-align: center;
   border: 1px blue solid;
+}
+#messageButton {
+  
 }
 </style>
 <div id="chatDiv">
   <div class="messages">
   </div>
   <hr>
-  <textarea class="messageArea"></textarea>
-  <div class="messageButton">
-    <p>Send</p>
+  <div class="messageSend">
+    <textarea class="messageArea"></textarea>
+    <p id="messageButton">Send</p>
   </div>
 </div>
 `
@@ -44,10 +52,6 @@ chatAppTemplate.innerHTML = `
 const messageTemplate = document.createElement('template')
 messageTemplate.innerHTML = `
 <style>
-.messages {
-  max-height: 350px;
-  overflow: auto;
-}
 .message {
   margin: 1%;
   text-align: left;
