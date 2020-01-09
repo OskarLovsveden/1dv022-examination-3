@@ -5,6 +5,8 @@ chatAppTemplate.innerHTML = `
   }
 #chatDiv {
   text-align: center;
+  width: 100%;
+  height: 100%;
 }
 #chatDiv p {
   font-family: Verdana, Geneva, sans-serif;
@@ -20,22 +22,25 @@ chatAppTemplate.innerHTML = `
   margin: 0 auto;
 }
 .messages {
+  width: 100%;
+  height: 75%;
   background-color: white;
-  max-height: 250px;
   overflow: auto;
 }
-.messageArea {
-  resize: none;
-  height: 50px;
-}
 .messageSend {
-  display: inline-block;
-  width: 90%;
+  width: 100%;
+  height: 20%;
   text-align: center;
-  border: 1px blue solid;
+  position: absolute;
+  bottom: 0;
+}
+.messageArea {
+  width: 90%;
+  height: 60%;
+  resize: none;
 }
 #messageButton {
-  
+  width: 90%;
 }
 </style>
 <div id="chatDiv">
@@ -44,7 +49,7 @@ chatAppTemplate.innerHTML = `
   <hr>
   <div class="messageSend">
     <textarea class="messageArea"></textarea>
-    <p id="messageButton">Send</p>
+    <button id="messageButton">Send</button>
   </div>
 </div>
 `
@@ -156,7 +161,7 @@ export default class ChatApp extends window.HTMLElement {
     const data = {
       type: 'message',
       data: text,
-      username: 'Ogge',
+      username: 'oskar!',
       channel: 'test1',
       key: this._key
     }
