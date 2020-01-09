@@ -20,9 +20,6 @@ export default class DesktopUI extends window.HTMLElement {
     const newWindow = document.createElement('desktop-window')
     this._desktopUI.appendChild(newWindow)
 
-    const newWindow1 = document.createElement('desktop-window')
-    this._desktopUI.appendChild(newWindow1)
-
     const newTaskbar = document.createElement('desktop-taskbar')
     this._desktopUI.appendChild(newTaskbar)
   }

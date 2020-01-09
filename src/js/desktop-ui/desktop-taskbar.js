@@ -2,24 +2,20 @@ const desktopTaskbarTemplate = document.createElement('template')
 desktopTaskbarTemplate.innerHTML = `
 <style>
 #desktopTaskbar {
-    padding: 0;
-    margin: 0;
     bottom: 0;
     left: 0;
     position: fixed;
     width: 100%;
-    height: 55px;
-    background-color: grey;
+    background-color: rgba(255,255,255,0.5);
 }
 
 #desktopTaskbar img {
     width: 50px;
-    margin: 5px;
 }
 </style>
 <div id="desktopTaskbar">
-      <img id="chatApp" src="./image/chat.png" alt="chat">
-      <img src="./image/fruit.png" alt="fruit">
+      <img id="chatApp" src="./image/chat.svg" alt="chat bubble">
+      <img id="memoryGame" src="./image/grid.svg" alt="grid">
   </div>
 `
 

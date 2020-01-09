@@ -2,18 +2,32 @@ const desktopWindowTemplate = document.createElement('template')
 desktopWindowTemplate.innerHTML = `
 <style>
 :host {
-    position: absolute;
-    left: 0;
-    top: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  max-height: 500px;
+  background-color: #f5f5f5;
+  border: 2px solid lightgrey;
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
+}
+header {
+  width: 100%;
+  height: 40px;
+}
+header img {
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  padding: 0;
 }
 #desktopWindow {
-    display: inline-block;
-    border: solid black 2px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    background-color: grey;
+  background-color: white;
 }
 </style>
+<header id="headerWindow">
+<img id="closeWindow" src="./image/x.svg" alt="An X">
+</header>
 <div id="desktopWindow">
 </div>
 `
@@ -28,6 +42,7 @@ export default class DesktopWindow extends window.HTMLElement {
     this.shadowRoot.appendChild(desktopWindowTemplate.content.cloneNode(true))
 
     this._desktopWindow = this.shadowRoot.querySelector('#desktopWindow')
+    this._headerWindow = this.shadowRoot.querySelector('#headerWindow')
 
     this.mousePosition = {}
     this.offset = [0, 0]
@@ -35,28 +50,25 @@ export default class DesktopWindow extends window.HTMLElement {
   }
 
   connectedCallback () {
-    const newTop = document.createElement('top-window')
-    this._desktopWindow.appendChild(newTop)
+    // const newTop = document.createElement('top-window')
+    // this._desktopWindow.appendChild(newTop)
 
     const newChat = document.createElement('chat-app')
     this._desktopWindow.appendChild(newChat)
 
-    // const newGame = document.createElement('game-unknown')
-    // this._desktopWindow.appendChild(newGame)
-
-    this.addEventListener('mousedown', function (e) {
+    this._headerWindow.addEventListener('mousedown', (event) => {
       this.isDown = true
       this.offset = [
-        this.offsetLeft - e.clientX,
-        this.offsetTop - e.clientY
+        this.offsetLeft - event.clientX,
+        this.offsetTop - event.clientY
       ]
-    }, true)
+    })
 
-    document.addEventListener('mouseup', () => {
+    this._headerWindow.addEventListener('mouseup', (event) => {
       this.isDown = false
-    }, true)
+    })
 
-    document.addEventListener('mousemove', (event) => {
+    this._headerWindow.addEventListener('mousemove', (event) => {
       event.preventDefault()
       if (this.isDown) {
         this.mousePosition = {

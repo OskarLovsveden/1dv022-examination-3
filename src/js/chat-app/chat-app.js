@@ -18,6 +18,7 @@ chatAppTemplate.innerHTML = `
 #chatDiv hr {
   border: 1px black solid;
   width: 90%;
+  margin: 0 auto;
 }
 .messageArea {
   width: 90%;
@@ -43,6 +44,10 @@ chatAppTemplate.innerHTML = `
 const messageTemplate = document.createElement('template')
 messageTemplate.innerHTML = `
 <style>
+.messages {
+  max-height: 350px;
+  overflow: auto;
+}
 .message {
   margin: 1%;
   text-align: left;
