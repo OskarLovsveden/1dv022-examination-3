@@ -32,7 +32,17 @@ export default class DesktopTaskbar extends window.HTMLElement {
   }
 
   connectedCallback () {
+    this._desktopTaskbar.addEventListener('click', (event) => {
+      console.log(event.target.id)
+      console.log(event.target.src)
 
+      this.dispatchEvent(new window.CustomEvent('iconclicked', {
+        detail: {
+          name: event.target.id,
+          src: event.target.src
+        }
+      }))
+    })
   }
 }
 

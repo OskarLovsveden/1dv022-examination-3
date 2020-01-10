@@ -17,10 +17,19 @@ export default class DesktopUI extends window.HTMLElement {
   }
 
   connectedCallback () {
-    const newWindow = document.createElement('desktop-window')
-    this._desktopUI.appendChild(newWindow)
-
     const newTaskbar = document.createElement('desktop-taskbar')
+
+    newTaskbar.addEventListener('iconclicked', (event) => {
+      const newWindow = document.createElement('desktop-window')
+
+      newWindow.setAttribute('name', event.detail.name)
+      newWindow.setAttribute('src', event.detail.src)
+
+      console.log(newWindow)
+
+      this._desktopUI.appendChild(newWindow)
+    })
+
     this._desktopUI.appendChild(newTaskbar)
   }
 }

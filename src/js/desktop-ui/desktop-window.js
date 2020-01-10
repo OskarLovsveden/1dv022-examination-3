@@ -23,6 +23,10 @@ header img {
   height: 40px;
   margin: 0;
   padding: 0;
+  float: left;
+}
+header p {
+  float: left;
 }
 #desktopWindow {
   height: 370px;
@@ -30,6 +34,8 @@ header img {
 </style>
 <header id="headerWindow">
 <img id="closeWindow" src="./image/x.svg" alt="An X">
+<p id="appName"></p>
+<img id="appIcon" src="" alt="current app">
 </header>
 <div id="desktopWindow">
 </div>
@@ -46,6 +52,11 @@ export default class DesktopWindow extends window.HTMLElement {
 
     this._desktopWindow = this.shadowRoot.querySelector('#desktopWindow')
     this._headerWindow = this.shadowRoot.querySelector('#headerWindow')
+    this._appName = this.shadowRoot.querySelector('#appName')
+    this._appIcon = this.shadowRoot.querySelector('#appIcon')
+
+    this._name = null
+    this._iconSrc = null
 
     this.mousePosition = {}
     this.offset = [0, 0]
@@ -53,9 +64,6 @@ export default class DesktopWindow extends window.HTMLElement {
   }
 
   connectedCallback () {
-    // const newTop = document.createElement('top-window')
-    // this._desktopWindow.appendChild(newTop)
-
     const newChat = document.createElement('chat-app')
     this._desktopWindow.appendChild(newChat)
 
@@ -71,7 +79,7 @@ export default class DesktopWindow extends window.HTMLElement {
       this.isDown = false
     })
 
-    this._headerWindow.addEventListener('mousemove', (event) => {
+    document.addEventListener('mousemove', (event) => {
       event.preventDefault()
       if (this.isDown) {
         this.mousePosition = {
@@ -84,6 +92,21 @@ export default class DesktopWindow extends window.HTMLElement {
         this.style.top = (this.mousePosition.y + this.offset[1]) + 'px'
       }
     }, true)
+  }
+
+  static get observedAttributes () {
+    return ['name', 'src']
+  }
+
+  attributeChangedCallback (name, oldValue, newValue) {
+    switch (name) {
+      case 'name':
+        this._appName.innerText = newValue
+        break
+      case 'src':
+        this._appIcon.setAttribute('src', newValue)
+        break
+    }
   }
 }
 
