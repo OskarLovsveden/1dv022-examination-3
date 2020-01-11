@@ -1,6 +1,9 @@
 Memory-game:
-- Enter kan välja redan borttagna brickor.
-- Fixa svårighetsgrader.
 
 Desktop-window:
-- Fixa så man kan kryssa rutan.
+- X should work for closing window
+
+Chat-app:
+- Username should be able to set username, and be set to local storage
+- Should always be scrolled to the bottom
+- Should not scroll outside the width when full

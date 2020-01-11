@@ -1,15 +1,13 @@
 const chatAppTemplate = document.createElement('template')
 chatAppTemplate.innerHTML = `
 <style>
-:host {
-}
 #chatDiv {
   text-align: center;
   width: 100%;
   height: 100%;
 }
 #chatDiv p {
-  font-family: Verdana, Geneva, sans-serif;
+  font-family: Verdana, sans-serif;
   color: #000000;
   text-decoration: none;
   font-style: normal;
@@ -43,8 +41,41 @@ chatAppTemplate.innerHTML = `
 #messageButton {
   width: 90%;
 }
+#usernameDiv {
+  width: 100%;
+  height: 75%;
+  background-color: white;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#usernameDiv input {
+  width: 80%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+#usernameDiv button {
+  background-color: lightseagreen;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 80%;
+}
+#usernameDiv button:hover {
+  opacity: 0.8;
+}
 </style>
 <div id="chatDiv">
+  <div id="usernameDiv">
+    <input id="usernameInput" type="text" placeholder="Enter username">
+    <input id="channelInput" type="text" placeholder="Enter channel">
+    <button>Enter Chat</button>
+  </div>
   <div class="messages">
   </div>
   <hr>
@@ -69,7 +100,7 @@ messageTemplate.innerHTML = `
   display: inline-block;
   padding: 3%;
   border-radius: 15px;
-  background-color: blue;
+  background-color: lightblue;
   margin: auto 0;
 }
 </style>
