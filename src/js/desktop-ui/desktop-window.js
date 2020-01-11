@@ -4,8 +4,8 @@ desktopWindowTemplate.innerHTML = `
 :host {
   min-height: 410px;
   min-width: 300px;
-  max-height: 410px;
-  max-width: 300px;
+  /* max-height: 410px; */
+  /* max-width: 300px; */
   position: absolute;
   left: 0;
   top: 0;

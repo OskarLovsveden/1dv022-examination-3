@@ -1,0 +1,6 @@
+Memory-game:
+- Enter kan välja redan borttagna brickor.
+- Fixa svårighetsgrader.
+
+Desktop-window:
+- Fixa så man kan kryssa rutan.
