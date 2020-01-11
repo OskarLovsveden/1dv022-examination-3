@@ -14,8 +14,8 @@ desktopTaskbarTemplate.innerHTML = `
 }
 </style>
 <div id="desktopTaskbar">
-      <img id="chatApp" src="./image/chat.svg" alt="chat bubble">
-      <img id="memoryGame" src="./image/grid.svg" alt="grid">
+      <img id="chat-app" src="./image/chat.svg" alt="chat bubble">
+      <img id="memory-game" src="./image/grid.svg" alt="grid">
   </div>
 `
 
@@ -33,9 +33,6 @@ export default class DesktopTaskbar extends window.HTMLElement {
 
   connectedCallback () {
     this._desktopTaskbar.addEventListener('click', (event) => {
-      console.log(event.target.id)
-      console.log(event.target.src)
-
       this.dispatchEvent(new window.CustomEvent('iconclicked', {
         detail: {
           name: event.target.id,

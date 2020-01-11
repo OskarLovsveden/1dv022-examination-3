@@ -25,8 +25,6 @@ export default class DesktopUI extends window.HTMLElement {
       newWindow.setAttribute('name', event.detail.name)
       newWindow.setAttribute('src', event.detail.src)
 
-      console.log(newWindow)
-
       this._desktopUI.appendChild(newWindow)
     })
 

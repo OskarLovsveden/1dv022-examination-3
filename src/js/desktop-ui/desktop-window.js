@@ -2,42 +2,57 @@ const desktopWindowTemplate = document.createElement('template')
 desktopWindowTemplate.innerHTML = `
 <style>
 :host {
+  min-height: 410px;
+  min-width: 300px;
+  max-height: 410px;
+  max-width: 300px;
   position: absolute;
   left: 0;
   top: 0;
-  min-height: 410px;
-  max-height: 410px;
-  min-width: 300px;
-  max-width: 300px;
   background-color: #f5f5f5;
   border: 2px solid lightgrey;
   border-radius: 5px 5px 0 0;
   overflow: hidden;
 }
 header {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 40px;
+  height: 10%;
+  text-align: center;
+  background-color: rgb(125, 125, 125, 0.1);
 }
 header img {
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
   margin: 0;
   padding: 0;
-  float: left;
 }
-header p {
-  float: left;
+#contentWindow {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 90%;
 }
-#desktopWindow {
-  height: 370px;
+#closeBtn {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#appIcon {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 </style>
 <header id="headerWindow">
-<img id="closeWindow" src="./image/x.svg" alt="An X">
+<img id="closeBtn" src="./image/x.svg" alt="An X">
 <p id="appName"></p>
 <img id="appIcon" src="" alt="current app">
 </header>
-<div id="desktopWindow">
+<div id="contentWindow">
 </div>
 `
 
@@ -50,13 +65,12 @@ export default class DesktopWindow extends window.HTMLElement {
     })
     this.shadowRoot.appendChild(desktopWindowTemplate.content.cloneNode(true))
 
-    this._desktopWindow = this.shadowRoot.querySelector('#desktopWindow')
+    this._contentWindow = this.shadowRoot.querySelector('#contentWindow')
     this._headerWindow = this.shadowRoot.querySelector('#headerWindow')
     this._appName = this.shadowRoot.querySelector('#appName')
     this._appIcon = this.shadowRoot.querySelector('#appIcon')
 
-    this._name = null
-    this._iconSrc = null
+    this._name = ''
 
     this.mousePosition = {}
     this.offset = [0, 0]
@@ -64,8 +78,8 @@ export default class DesktopWindow extends window.HTMLElement {
   }
 
   connectedCallback () {
-    const newChat = document.createElement('chat-app')
-    this._desktopWindow.appendChild(newChat)
+    const newApp = document.createElement(this._name)
+    this._contentWindow.appendChild(newApp)
 
     this._headerWindow.addEventListener('mousedown', (event) => {
       this.isDown = true
@@ -101,6 +115,7 @@ export default class DesktopWindow extends window.HTMLElement {
   attributeChangedCallback (name, oldValue, newValue) {
     switch (name) {
       case 'name':
+        this._name = newValue
         this._appName.innerText = newValue
         break
       case 'src':

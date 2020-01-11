@@ -2,7 +2,7 @@ const chatAppTemplate = document.createElement('template')
 chatAppTemplate.innerHTML = `
 <style>
 :host {
-  }
+}
 #chatDiv {
   text-align: center;
   width: 100%;
@@ -33,10 +33,11 @@ chatAppTemplate.innerHTML = `
   text-align: center;
   position: absolute;
   bottom: 0;
+  left: 0;
 }
 .messageArea {
   width: 90%;
-  height: 60%;
+  height: 55%;
   resize: none;
 }
 #messageButton {

@@ -2,19 +2,26 @@
 const gameTemplate = document.createElement('template')
 gameTemplate.innerHTML = `
 <style>
+  #triesDiv {
+    text-align: center;
+  }
+  #gamediv {
+    /* width: 100%;
+    height: 60%; */
+    text-align: center
+  }
   #gamediv img {
-    max-width: 100%;
+    width: 65px;
   }
   a {
-    display: inline-block;
     border-radius: 3%;
   }
   a:focus {
-    background-color: pink;
+    background-color: green;
     outline: none;
   }
 </style>
-<div>
+<div id="triesDiv">
   <h3 id="tries">
     Number of tries: 0
   </h3>
@@ -26,7 +33,7 @@ gameTemplate.innerHTML = `
 // Template for the tiles.
 const tileTemplate = document.createElement('template')
 tileTemplate.innerHTML = `
-<a href="#"><img src="image/0.png" alt="A memory tile" /></a>
+<a href="#"><img src="../../image/memory-game/0.png" alt="A memory tile" /></a>
 `
 
 /**
@@ -36,14 +43,13 @@ tileTemplate.innerHTML = `
  * @class Memory
  * @extends {window.HTMLElement}
  */
-export class MemoryGame extends window.HTMLElement {
+export default class MemoryGame extends window.HTMLElement {
   /**
    *Creates an instance of MemoryGame.
-   * @param {number} [rows=4]
-   * @param {number} [cols=4]
+   *
    * @memberof MemoryGame
    */
-  constructor (rows = 4, cols = 4) {
+  constructor () {
     super()
 
     this.attachShadow({
@@ -52,8 +58,8 @@ export class MemoryGame extends window.HTMLElement {
 
     this.shadowRoot.appendChild(gameTemplate.content.cloneNode(true))
 
-    this.rows = rows
-    this.cols = cols
+    this.rows = 4
+    this.cols = 4
     this._tiles = this._getPictureArray()
     this._gamediv = this.shadowRoot.querySelector('#gamediv')
     this._turn1 = null
@@ -157,7 +163,7 @@ export class MemoryGame extends window.HTMLElement {
       return
     }
 
-    img.src = 'image/' + tile + '.png'
+    img.src = '../../image/memory-game/' + tile + '.png'
 
     if (!this._turn1) {
       this._turn1 = img
@@ -206,8 +212,8 @@ export class MemoryGame extends window.HTMLElement {
    */
   _noPair (time) {
     setTimeout(() => {
-      this._turn1.src = 'image/0.png'
-      this._turn2.src = 'image/0.png'
+      this._turn1.src = '../../image/memory-game/0.png'
+      this._turn2.src = '../../image/memory-game/0.png'
 
       this._turn1 = null
       this._turn2 = null
