@@ -2,20 +2,20 @@ const chatAppTemplate = document.createElement('template')
 chatAppTemplate.innerHTML = `
 <style>
 :host {
-    font-family: Verdana, sans-serif;
-    color: #000000;
-    text-decoration: none;
-    font-style: normal;
-    font-variant: normal;
-    text-transform: none;
-  }
+  font-family: Verdana, sans-serif;
+  color: #000000;
+  text-decoration: none;
+  font-style: normal;
+  font-variant: normal;
+  text-transform: none;
+}
 #chatDiv {
   position: relative;
   text-align: center;
   width: 100%;
   height: 100%;
 }
-.messages {
+#messages {
   width: 100%;
   height: 70%;
   background-color: white;
@@ -48,18 +48,21 @@ chatAppTemplate.innerHTML = `
   opacity: 0.8#
 }
 #usernameDiv {
-  width: 100%;
-  height: 100%;
-  background-color: white;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
 }
 #usernameDiv input {
   width: 80%;
   padding: 12px 20px;
   margin: 8px 0;
-  display: inline-block;
   border: 1px solid #ccc;
   box-sizing: border-box;
 }
@@ -75,9 +78,12 @@ chatAppTemplate.innerHTML = `
 #usernameDiv button:hover {
   opacity: 0.8#
 }
+.hidden {
+  display: none !important;
+}
 </style>
 <div id="chatDiv">
-  <div class="messages">
+  <div id="messages">
   </div>
   <div id="messageSend">
     <textarea id="messageArea"></textarea>
@@ -85,7 +91,6 @@ chatAppTemplate.innerHTML = `
   </div>
   <div id="usernameDiv">
     <input id="usernameInput" type="text" placeholder="Enter username">
-    <input id="channelInput" type="text" placeholder="Enter channel">
     <button>Enter Chat</button>
   </div>
 </div>
@@ -145,7 +150,6 @@ export default class ChatApp extends window.HTMLElement {
     // Username/channel
     this._usernameDiv = this.shadowRoot.querySelector('#usernameDiv')
     this._usernameInput = this.shadowRoot.querySelector('#usernameInput')
-    this._channelInput = this.shadowRoot.querySelector('#channelInput')
 
     this._socket = null
     this._address = 'ws://vhost3.lnu.se:20080/socket/'
@@ -191,11 +195,7 @@ export default class ChatApp extends window.HTMLElement {
     this._usernameInput.value = ''
     this._usernameInput.disabled = true
 
-    this._channel = this._channelInput.value
-    this._channelInput.value = ''
-    this._channelInput.disabled = true
-
-    this._usernameDiv.hidden = true
+    this._usernameDiv.classList.add('hidden')
     this._connect()
   }
 
@@ -265,7 +265,7 @@ export default class ChatApp extends window.HTMLElement {
     messageDiv.querySelector('.author').textContent = `${message.username}:`
     messageDiv.querySelector('.text').textContent = message.data
 
-    this._chatDiv.querySelector('.messages').appendChild(messageDiv)
+    this._chatDiv.querySelector('#messages').appendChild(messageDiv)
   }
 }
 
