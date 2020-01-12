@@ -14,8 +14,23 @@ gameTemplate.innerHTML = `
     padding-top: 10px;
     text-align: center;
   }
+  #optionsDiv button {
+    background-color: lightseagreen;
+    color: white;
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    cursor: pointer;
+  }
+  #optionsDiv button:hover {
+    opacity: 0.8;
+  }
   #triesDiv {
     text-align: center;
+  }
+  #triesDiv h4 {
+    margin-top: 3%;
+    margin-bottom: 3%;
   }
   #gamediv {
     text-align: center
@@ -27,7 +42,7 @@ gameTemplate.innerHTML = `
     border-radius: 3%;
   }
   a:focus {
-    background-color: green;
+    background-color: lightseagreen;
     outline: none;
   }
   .removed {
@@ -40,9 +55,9 @@ gameTemplate.innerHTML = `
   <button data-rows="4" data-cols="4" id="fourFour">4 x 4</button>
 </div>
 <div id="triesDiv">
-  <h3 id="tries">
+  <h4 id="tries">
     Number of tries: 0
-  </h3>
+  </h4>
 </div>
 <div id="gamediv">
 </div>

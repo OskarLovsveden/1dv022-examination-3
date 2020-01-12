@@ -1,7 +1,17 @@
+PWD:
+- Windows should get focus when clicked/dragged. PRIO
+- The window with focus shall be on top of all other windows. PRIO
+
+Feature:
+- One, by you, designed and decided application PRIO
+
 Memory-game:
+- Present something on "winning" game PRIO
 
 Desktop-window:
-- X should work for closing window
+- X should work for closing window PRIO
+- Focus window when dragging/clicking it PRIO
+- Opening multiple windows in a row offsets window 20x20px
 
 Chat-app:
-- Add one extended feature. (emojis, chaching message history, change username, etc)
+- Add one extended feature. (emojis, chaching message history, change username, etc) PRIO

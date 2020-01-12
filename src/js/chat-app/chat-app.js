@@ -54,7 +54,7 @@ chatAppTemplate.innerHTML = `
   width: 95%;
 }
 #messageSend button:hover {
-  opacity: 0.8#
+  opacity: 0.8;
 }
 #usernameDiv {
   display: inline-flex;
@@ -85,7 +85,7 @@ chatAppTemplate.innerHTML = `
   width: 80%;
 }
 #usernameDiv button:hover {
-  opacity: 0.8#
+  opacity: 0.8;
 }
 .hidden {
   display: none !important;
