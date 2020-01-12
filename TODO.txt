@@ -4,7 +4,6 @@ Desktop-window:
 - X should work for closing window
 
 Chat-app:
-- Username should be set to local storage on entering Chat
-- If local storage has a username, it should be used for the Chat
 - Should always be scrolled to the bottom
 - Should not scroll outside the width when full
+- Add one extended feature. (emojis, chaching message history, change username, etc)

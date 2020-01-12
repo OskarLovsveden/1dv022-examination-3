@@ -10,7 +10,6 @@ chatAppTemplate.innerHTML = `
   text-transform: none;
 }
 #chatDiv {
-  position: relative;
   text-align: center;
   width: 100%;
   height: 100%;
@@ -29,7 +28,7 @@ chatAppTemplate.innerHTML = `
   display: inline-block;
 }
 #messageSend textarea {
-  width: 80%;
+  width: 95%;
   height: 55%;
   display: inline-block;
   border: 1px solid #ccc;
@@ -42,7 +41,7 @@ chatAppTemplate.innerHTML = `
   padding: 14px 20px;
   border: none;
   cursor: pointer;
-  width: 80%;
+  width: 95%;
 }
 #messageSend button:hover {
   opacity: 0.8#
@@ -105,13 +104,15 @@ messageTemplate.innerHTML = `
 }
 .author {
   font-size: 1em;
+  margin: 0
 }
 .text {
   display: inline-block;
   padding: 3%;
   border-radius: 15px;
   background-color: lightblue;
-  margin: auto 0;
+  margin: 0;
+  overflow-wrap: break-word;
 }
 </style>
 <div class="message">
@@ -183,6 +184,7 @@ export default class ChatApp extends window.HTMLElement {
         }
       }
     })
+    this._getUsername()
   }
 
   /**
@@ -196,7 +198,26 @@ export default class ChatApp extends window.HTMLElement {
     this._usernameInput.disabled = true
 
     this._usernameDiv.classList.add('hidden')
+
+    this._setUsername()
     this._connect()
+  }
+
+  _setUsername () {
+    const chatUser = {
+      chatUser: this._username
+    }
+    window.localStorage.setItem('chatUser', JSON.stringify(chatUser))
+  }
+
+  _getUsername () {
+    if (window.localStorage.key('chatUser')) {
+      const data = JSON.parse(window.localStorage.getItem('chatUser'))
+      this._username = data.chatUser
+      this._usernameInput.disabled = true
+      this._usernameDiv.classList.add('hidden')
+      this._connect()
+    }
   }
 
   /**
