@@ -1,6 +1,14 @@
 const desktopTaskbarTemplate = document.createElement('template')
 desktopTaskbarTemplate.innerHTML = `
 <style>
+:host {
+    font-family: Verdana, sans-serif;
+    color: #000000;
+    text-decoration: none;
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+  }
 #desktopTaskbar {
     bottom: 0;
     left: 0;

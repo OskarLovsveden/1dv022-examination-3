@@ -2,6 +2,14 @@
 const gameTemplate = document.createElement('template')
 gameTemplate.innerHTML = `
 <style>
+  :host {
+    font-family: Verdana, sans-serif;
+    color: #000000;
+    text-decoration: none;
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+  }
   #optionsDiv {
     padding-top: 10px;
     text-align: center;

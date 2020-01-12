@@ -1,49 +1,55 @@
 const chatAppTemplate = document.createElement('template')
 chatAppTemplate.innerHTML = `
 <style>
+:host {
+    font-family: Verdana, sans-serif;
+    color: #000000;
+    text-decoration: none;
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+  }
 #chatDiv {
+  position: relative;
   text-align: center;
   width: 100%;
   height: 100%;
 }
-#chatDiv p {
-  font-family: Verdana, sans-serif;
-  color: #000000;
-  text-decoration: none;
-  font-style: normal;
-  font-variant: normal;
-  text-transform: none;
-}
-#chatDiv hr {
-  border: 1px black solid;
-  width: 90%;
-  margin: 0 auto;
-}
 .messages {
   width: 100%;
-  height: 75%;
+  height: 70%;
   background-color: white;
   overflow: auto;
+  display: inline-block;
 }
-.messageSend {
+#messageSend {
   width: 100%;
-  height: 20%;
+  height: 30%;
   text-align: center;
-  position: absolute;
-  bottom: 0;
-  left: 0;
+  display: inline-block;
 }
-.messageArea {
-  width: 90%;
+#messageSend textarea {
+  width: 80%;
   height: 55%;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
   resize: none;
 }
-#messageButton {
-  width: 90%;
+#messageSend button {
+  background-color: lightseagreen;
+  color: white;
+  padding: 14px 20px;
+  border: none;
+  cursor: pointer;
+  width: 80%;
+}
+#messageSend button:hover {
+  opacity: 0.8#
 }
 #usernameDiv {
   width: 100%;
-  height: 75%;
+  height: 100%;
   background-color: white;
   position: absolute;
   top: 0;
@@ -67,21 +73,20 @@ chatAppTemplate.innerHTML = `
   width: 80%;
 }
 #usernameDiv button:hover {
-  opacity: 0.8;
+  opacity: 0.8#
 }
 </style>
 <div id="chatDiv">
+  <div class="messages">
+  </div>
+  <div id="messageSend">
+    <textarea id="messageArea"></textarea>
+    <button>Send</button>
+  </div>
   <div id="usernameDiv">
     <input id="usernameInput" type="text" placeholder="Enter username">
     <input id="channelInput" type="text" placeholder="Enter channel">
     <button>Enter Chat</button>
-  </div>
-  <div class="messages">
-  </div>
-  <hr>
-  <div class="messageSend">
-    <textarea class="messageArea"></textarea>
-    <button id="messageButton">Send</button>
   </div>
 </div>
 `
@@ -130,25 +135,68 @@ export default class ChatApp extends window.HTMLElement {
     })
     this.shadowRoot.appendChild(chatAppTemplate.content.cloneNode(true))
 
+    // Main div
     this._chatDiv = this.shadowRoot.querySelector('#chatDiv')
+
+    // Send message
+    this._sendMessageDiv = this.shadowRoot.querySelector('#messageSend')
+    this._messageArea = this.shadowRoot.querySelector('#messageArea')
+
+    // Username/channel
+    this._usernameDiv = this.shadowRoot.querySelector('#usernameDiv')
+    this._usernameInput = this.shadowRoot.querySelector('#usernameInput')
+    this._channelInput = this.shadowRoot.querySelector('#channelInput')
 
     this._socket = null
     this._address = 'ws://vhost3.lnu.se:20080/socket/'
     this._key = 'eDBE76deU7L0H9mEBgxUKVR0VCnq0XBd'
+    this._username = ''
+    this._channel = ''
   }
 
   connectedCallback () {
     this._chatDiv.addEventListener('keypress', (event) => {
       if (event.keyCode === 13) {
-        this._sendMessage(event.target.value)
-        event.target.value = ''
+        if (this._usernameInput.value) {
+          this._submitUsername()
+        }
+        if (this._messageArea.value) {
+          this._sendMessage(this._messageArea.value)
+          this._messageArea.value = ''
+        }
         event.preventDefault()
       }
     })
 
-    this._connect().then(() => {
-      // this._sendMessage('yo')
+    this._chatDiv.addEventListener('click', (event) => {
+      if (event.target.nodeName === 'BUTTON') {
+        if (this._usernameInput.value) {
+          this._submitUsername()
+        }
+        if (this._messageArea.value) {
+          this._sendMessage(this._messageArea.value)
+          this._messageArea.value = ''
+        }
+      }
     })
+  }
+
+  /**
+   * Submits the given username to the chat application.
+   *
+   * @memberof ChatApp
+   */
+  _submitUsername () {
+    this._username = this._usernameInput.value
+    this._usernameInput.value = ''
+    this._usernameInput.disabled = true
+
+    this._channel = this._channelInput.value
+    this._channelInput.value = ''
+    this._channelInput.disabled = true
+
+    this._usernameDiv.hidden = true
+    this._connect()
   }
 
   /**
@@ -193,8 +241,8 @@ export default class ChatApp extends window.HTMLElement {
     const data = {
       type: 'message',
       data: text,
-      username: 'oskar!',
-      channel: 'test1',
+      username: this._username,
+      channel: this._channel,
       key: this._key
     }
 

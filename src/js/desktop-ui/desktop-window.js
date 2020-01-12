@@ -4,8 +4,6 @@ desktopWindowTemplate.innerHTML = `
 :host {
   min-height: 410px;
   min-width: 300px;
-  /* max-height: 410px; */
-  /* max-width: 300px; */
   position: absolute;
   left: 0;
   top: 0;
@@ -13,14 +11,22 @@ desktopWindowTemplate.innerHTML = `
   border: 2px solid lightgrey;
   border-radius: 5px 5px 0 0;
   overflow: hidden;
+  font-family: Verdana, sans-serif;
+  color: #000000;
+  text-decoration: none;
+  font-style: normal;
+  font-variant: normal;
+  text-transform: none;
 }
 header {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 10%;
-  text-align: center;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: rgb(125, 125, 125, 0.1);
 }
 header img {
@@ -28,6 +34,9 @@ header img {
   height: 45px;
   margin: 0;
   padding: 0;
+}
+header p:hover {
+  cursor: default;
 }
 #contentWindow {
   position: absolute;

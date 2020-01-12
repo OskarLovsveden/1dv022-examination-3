@@ -1,5 +1,15 @@
 const desktopUiTemplate = document.createElement('template')
 desktopUiTemplate.innerHTML = `
+<style>
+:host {
+    font-family: Verdana, sans-serif;
+    color: #000000;
+    text-decoration: none;
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+  }
+</style>
 <div id="desktop">
 </div>
 `
