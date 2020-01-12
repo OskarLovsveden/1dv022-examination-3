@@ -21,6 +21,16 @@ chatAppTemplate.innerHTML = `
   overflow: auto;
   display: inline-block;
 }
+::-webkit-scrollbar {
+    width: 1em;
+}
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+}
+::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
 #messageSend {
   width: 100%;
   height: 30%;
@@ -143,6 +153,7 @@ export default class ChatApp extends window.HTMLElement {
 
     // Main div
     this._chatDiv = this.shadowRoot.querySelector('#chatDiv')
+    this._messagesDiv = this.shadowRoot.querySelector('#messages')
 
     // Send message
     this._sendMessageDiv = this.shadowRoot.querySelector('#messageSend')
@@ -203,6 +214,11 @@ export default class ChatApp extends window.HTMLElement {
     this._connect()
   }
 
+  /**
+   * If the user provided a username, it is set to localstorage.
+   *
+   * @memberof ChatApp
+   */
   _setUsername () {
     const chatUser = {
       chatUser: this._username
@@ -210,6 +226,11 @@ export default class ChatApp extends window.HTMLElement {
     window.localStorage.setItem('chatUser', JSON.stringify(chatUser))
   }
 
+  /**
+   * If localstorage has a username saved, this is used for the application.
+   *
+   * @memberof ChatApp
+   */
   _getUsername () {
     if (window.localStorage.key('chatUser')) {
       const data = JSON.parse(window.localStorage.getItem('chatUser'))
@@ -218,6 +239,16 @@ export default class ChatApp extends window.HTMLElement {
       this._usernameDiv.classList.add('hidden')
       this._connect()
     }
+  }
+
+  /**
+   * Scrolls the overflow of an element to the bottom.
+   *
+   * @param {HTMLElement} element - The element to be scrolled down.
+   * @memberof ChatApp
+   */
+  _scrollDown (element) {
+    element.scrollTop = element.scrollHeight
   }
 
   /**
@@ -281,12 +312,14 @@ export default class ChatApp extends window.HTMLElement {
    * @memberof ChatApp
    */
   _printMessage (message) {
-    const messageDiv = messageTemplate.content.cloneNode(true)
+    console.log(message)
+    const newMessage = messageTemplate.content.cloneNode(true)
 
-    messageDiv.querySelector('.author').textContent = `${message.username}:`
-    messageDiv.querySelector('.text').textContent = message.data
+    newMessage.querySelector('.author').textContent = `${message.username}:`
+    newMessage.querySelector('.text').textContent = message.data
 
-    this._chatDiv.querySelector('#messages').appendChild(messageDiv)
+    this._messagesDiv.appendChild(newMessage)
+    this._scrollDown(this._messagesDiv)
   }
 }
 

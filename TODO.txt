@@ -4,6 +4,4 @@ Desktop-window:
 - X should work for closing window
 
 Chat-app:
-- Should always be scrolled to the bottom
-- Should not scroll outside the width when full
 - Add one extended feature. (emojis, chaching message history, change username, etc)
