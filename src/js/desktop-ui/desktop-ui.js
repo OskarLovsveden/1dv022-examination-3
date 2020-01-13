@@ -36,15 +36,12 @@ export default class DesktopUI extends window.HTMLElement {
       newWindow.setAttribute('name', event.detail.name)
       newWindow.setAttribute('src', event.detail.src)
       newWindow.tabIndex = this._windowCounter
+
       this._desktopUI.appendChild(newWindow)
 
       this._windowCounter++
     })
     this._desktopUI.appendChild(newTaskbar)
-
-    document.addEventListener('mousedown', (event) => {
-
-    })
   }
 }
 

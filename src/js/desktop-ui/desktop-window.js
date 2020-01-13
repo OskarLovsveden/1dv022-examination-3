@@ -18,6 +18,7 @@ desktopWindowTemplate.innerHTML = `
 }
 :host(:focus) {
   outline: none;
+  z-index: 1; 
 }
 header {
   position: absolute;
