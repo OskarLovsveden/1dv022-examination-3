@@ -15,3 +15,4 @@ Desktop-window:
 
 Chat-app:
 - Add one extended feature. (emojis, chaching message history, change username, etc) PRIO
+- User shouldnt be able to send only white-space

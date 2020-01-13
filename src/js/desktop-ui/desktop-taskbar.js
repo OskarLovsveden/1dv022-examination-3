@@ -18,7 +18,15 @@ desktopTaskbarTemplate.innerHTML = `
 }
 
 #desktopTaskbar img {
-    width: 50px;
+  width: 50px;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  -webkit-transition: .3s ease-in-out;
+  transition: .3s ease-in-out;
+}
+#desktopTaskbar img:hover {
+  -webkit-transform: scale(1.3);
+  transform: scale(1.3);
 }
 </style>
 <div id="desktopTaskbar">
@@ -41,12 +49,14 @@ export default class DesktopTaskbar extends window.HTMLElement {
 
   connectedCallback () {
     this._desktopTaskbar.addEventListener('click', (event) => {
-      this.dispatchEvent(new window.CustomEvent('iconclicked', {
-        detail: {
-          name: event.target.id,
-          src: event.target.src
-        }
-      }))
+      if (event.target.nodeName === 'IMG') {
+        this.dispatchEvent(new window.CustomEvent('iconclicked', {
+          detail: {
+            name: event.target.id,
+            src: event.target.src
+          }
+        }))
+      }
     })
   }
 }

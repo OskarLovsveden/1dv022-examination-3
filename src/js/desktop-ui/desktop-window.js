@@ -49,6 +49,14 @@ header p:hover {
   position: absolute;
   top: 0;
   left: 0;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  -webkit-transition: .3s ease-in-out;
+  transition: .3s ease-in-out;
+}
+#closeBtn:hover {
+  -webkit-transform: scale(1.3);
+  transform: scale(1.3);
 }
 #appIcon {
   position: absolute;
@@ -76,6 +84,8 @@ export default class DesktopWindow extends window.HTMLElement {
 
     this._contentWindow = this.shadowRoot.querySelector('#contentWindow')
     this._headerWindow = this.shadowRoot.querySelector('#headerWindow')
+    this._closeBtn = this.shadowRoot.querySelector('#closeBtn')
+
     this._appName = this.shadowRoot.querySelector('#appName')
     this._appIcon = this.shadowRoot.querySelector('#appIcon')
 
@@ -91,6 +101,9 @@ export default class DesktopWindow extends window.HTMLElement {
     this._contentWindow.appendChild(newApp)
 
     this._headerWindow.addEventListener('mousedown', (event) => {
+      if (event.target === this._closeBtn) {
+        return
+      }
       this.isDown = true
       this.offset = [
         this.offsetLeft - event.clientX,
@@ -98,7 +111,7 @@ export default class DesktopWindow extends window.HTMLElement {
       ]
     })
 
-    this._headerWindow.addEventListener('mouseup', (event) => {
+    this._headerWindow.addEventListener('mouseup', () => {
       this.isDown = false
     })
 
@@ -114,7 +127,14 @@ export default class DesktopWindow extends window.HTMLElement {
         this.style.left = (this.mousePosition.x + this.offset[0]) + 'px'
         this.style.top = (this.mousePosition.y + this.offset[1]) + 'px'
       }
-    }, true)
+    })
+
+    this._closeBtn.addEventListener('click', () => {
+      this.parentNode.removeChild(this)
+    })
+
+    this.addEventListener('mousedown', (event) => {
+    })
   }
 
   static get observedAttributes () {

@@ -24,6 +24,8 @@ export default class DesktopUI extends window.HTMLElement {
     this.shadowRoot.appendChild(desktopUiTemplate.content.cloneNode(true))
 
     this._desktopUI = this.shadowRoot.querySelector('#desktop')
+
+    this._windowCounter = 0
   }
 
   connectedCallback () {
@@ -31,11 +33,11 @@ export default class DesktopUI extends window.HTMLElement {
 
     newTaskbar.addEventListener('iconclicked', (event) => {
       const newWindow = document.createElement('desktop-window')
-
       newWindow.setAttribute('name', event.detail.name)
       newWindow.setAttribute('src', event.detail.src)
-
       this._desktopUI.appendChild(newWindow)
+
+      this._windowCounter++
     })
 
     this._desktopUI.appendChild(newTaskbar)

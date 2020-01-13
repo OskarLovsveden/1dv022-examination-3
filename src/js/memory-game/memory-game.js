@@ -177,11 +177,6 @@ export default class MemoryGame extends window.HTMLElement {
     }, true)
   }
 
-  disconnectedCallback () {
-    this._gamediv.removeEventListener('click')
-    this._gamediv.removeEventListener('keydown')
-  }
-
   /**
    * Renders the game with the current number of rows and cols.
    *
