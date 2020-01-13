@@ -1,6 +1,4 @@
 PWD:
-- Windows should get focus when clicked/dragged. PRIO
-- The window with focus shall be on top of all other windows. PRIO
 
 Poke-API:
 - List all Pokémon
