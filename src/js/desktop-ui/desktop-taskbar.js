@@ -32,6 +32,7 @@ desktopTaskbarTemplate.innerHTML = `
 <div id="desktopTaskbar">
       <img id="chat-app" src="./image/chat.svg" alt="chat bubble">
       <img id="memory-game" src="./image/grid.svg" alt="grid">
+      <img id="poke-app" src="./image/search.svg" alt="search">
   </div>
 `
 
