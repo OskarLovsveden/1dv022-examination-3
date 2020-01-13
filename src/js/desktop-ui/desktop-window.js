@@ -121,8 +121,8 @@ export default class DesktopWindow extends window.HTMLElement {
     return ['name', 'src']
   }
 
-  attributeChangedCallback (name, oldValue, newValue) {
-    switch (name) {
+  attributeChangedCallback (attributes, oldValue, newValue) {
+    switch (attributes) {
       case 'name':
         this._name = newValue
         this._appName.innerText = newValue
