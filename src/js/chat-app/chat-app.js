@@ -312,7 +312,6 @@ export default class ChatApp extends window.HTMLElement {
    * @memberof ChatApp
    */
   _printMessage (message) {
-    console.log(message)
     const newMessage = messageTemplate.content.cloneNode(true)
 
     newMessage.querySelector('.author').textContent = `${message.username}:`

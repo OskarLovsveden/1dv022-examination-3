@@ -5,8 +5,6 @@ desktopWindowTemplate.innerHTML = `
   min-height: 410px;
   min-width: 300px;
   position: absolute;
-  left: 0;
-  top: 0;
   background-color: #f5f5f5;
   border: 2px solid lightgrey;
   border-radius: 5px 5px 0 0;
@@ -17,6 +15,9 @@ desktopWindowTemplate.innerHTML = `
   font-style: normal;
   font-variant: normal;
   text-transform: none;
+}
+:host(:focus) {
+  outline: none;
 }
 header {
   position: absolute;
@@ -132,13 +133,10 @@ export default class DesktopWindow extends window.HTMLElement {
     this._closeBtn.addEventListener('click', () => {
       this.parentNode.removeChild(this)
     })
-
-    this.addEventListener('mousedown', (event) => {
-    })
   }
 
   static get observedAttributes () {
-    return ['name', 'src']
+    return ['name', 'src', 'tabindex']
   }
 
   attributeChangedCallback (attributes, oldValue, newValue) {
@@ -149,6 +147,10 @@ export default class DesktopWindow extends window.HTMLElement {
         break
       case 'src':
         this._appIcon.setAttribute('src', newValue)
+        break
+      case 'tabindex':
+        this.style.left = (this.tabIndex * 10) + 'px'
+        this.style.top = (this.tabIndex * 10) + 'px'
         break
     }
   }

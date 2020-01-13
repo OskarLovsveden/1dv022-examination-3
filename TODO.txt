@@ -9,9 +9,7 @@ Memory-game:
 - Present something on "winning" game PRIO
 
 Desktop-window:
-- X should work for closing window PRIO
-- Focus window when dragging/clicking it PRIO
-- Opening multiple windows in a row offsets window 20x20px
+- Put focused window on top when clicked/dragged PRIO
 
 Chat-app:
 - Add one extended feature. (emojis, chaching message history, change username, etc) PRIO
