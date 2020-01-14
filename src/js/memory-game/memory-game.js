@@ -106,6 +106,10 @@ export default class MemoryGame extends window.HTMLElement {
     this._pairs = 0
     this._index = 0
     this._tileLimit = 0
+
+    this._winUrl = 'http://numbersapi.com/'
+    this._winArr = ['trivia', 'math', 'date', 'year']
+    this._winCondition = 0
   }
 
   connectedCallback () {
@@ -123,6 +127,7 @@ export default class MemoryGame extends window.HTMLElement {
         this._rows = parseInt(event.target.getAttribute('data-rows'))
         this._cols = parseInt(event.target.getAttribute('data-cols'))
         this._tiles = this._getPictureArray()
+        this._winCondition = (this._rows * this._cols) / 2
         this._renderGame()
       }
     })
@@ -145,7 +150,7 @@ export default class MemoryGame extends window.HTMLElement {
     // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code - Inspiration
     this._gamediv.addEventListener('keydown', (event) => {
       if (event.defaultPrevented) {
-        return // Do nothing if event already handled
+        return
       }
 
       switch (event.code) {
@@ -172,7 +177,6 @@ export default class MemoryGame extends window.HTMLElement {
           this._turnTile(this._tiles[this._index], event.target.firstElementChild)
           break
       }
-      // Consume the event so it doesn't get handled twice
       event.preventDefault()
     }, true)
   }
@@ -296,7 +300,8 @@ export default class MemoryGame extends window.HTMLElement {
       this._turn2 = img
       if (tile === this._lastTile) {
         this._pairs += 1
-        if (this._pairs === (this._cols * this._rows) / 2) {
+        if (this._pairs === this._winCondition) {
+          this._winFact()
         }
         this._pair(300)
       } else {
@@ -376,6 +381,27 @@ export default class MemoryGame extends window.HTMLElement {
     }
 
     return array
+  }
+
+  async _winFact () {
+    console.log(Math.floor((Math.random() * 4) + 1) - 1)
+    const randomIndex = Math.floor((Math.random() * 4) + 1) - 1
+    const category = this._winArr[randomIndex]
+    console.log(`${this._winUrl}${this._tries}/${category}`)
+
+    const response = await window.fetch(`${this._winUrl}${this._tries}/${category}?json`)
+    if (!response.ok) {
+      throw new Error('Network response was not ok')
+    }
+    return response.json()
+      .then((data) => {
+        const fact = document.createElement('h3')
+        fact.innerText = data.text
+        this._gamediv.textContent = ''
+        this._gamediv.appendChild(fact)
+      }).catch((error) => {
+        console.error('There has been a problem with your fetch operation:', error)
+      })
   }
 }
 

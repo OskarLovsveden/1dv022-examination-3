@@ -4,7 +4,7 @@ Poke-API:
 - Try to clean strings more to avoid random symbols.
 
 Memory-game:
-- Present something on "winning" game PRIO (numbersapi for amount of tries?)
+- Present numperapi corresponding to number of tries on "winning"
 
 Desktop-window:
 
