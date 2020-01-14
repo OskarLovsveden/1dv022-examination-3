@@ -353,6 +353,7 @@ export default class MemoryGame extends window.HTMLElement {
     }
 
     this.fisherYatesShuffle(arr)
+    // this.fisherYatesShuffle(arr)
     return arr
   }
 

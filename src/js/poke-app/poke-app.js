@@ -52,7 +52,7 @@ pokeAppTemplate.innerHTML = `
   width: 50%;
   height: 30%;
   position: absolute;
-  top: 0;
+  top: 10%;
   left: 0;
   display: flex;
   justify-content: center;
@@ -62,6 +62,15 @@ pokeAppTemplate.innerHTML = `
 #pokeDivTopRight {
   width: 50%;
   height: 30%;
+  position: absolute;
+  top: 10%;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+h4 {
+  width: 100%;
   position: absolute;
   top: 0;
   right: 0;
@@ -74,27 +83,31 @@ h4, h5 {
 }
 #pokeDesc {
   width: 94%;
-  height: 70%;
+  height: 60%;
   margin: 0 3%;
   position: absolute;
   bottom: 0;
   left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
 <div id="searchDiv">
-  <input type="text" id="searchbar" placeholder="Enter a Pokémons name or dex#">
+  <input type="text" id="searchbar" placeholder="Write here">
   <button id="submitSearch">Search</button>
 </div>
 <div id="pokeDiv">
+  <h4 id="pokeTitle"></h4>
   <div id="pokeDivTopRight">
-    <img id="pokeImg" src="#">
+    <img id="pokeImg" src="././image/ghost.svg">
   </div>
   <div id="pokeDivTopLeft">
-      <h4 id="pokeTitle"># -</h4>
-      <h5 id="pokeType1">Type1: -</h5>
-      <h5 id="pokeType2">Type2: -</h5>
+      <h5 id="pokeType1"></h5>
+      <h5 id="pokeType2"></h5>
   </div>
-  <p id="pokeDesc">Description</p>
+  <p id="pokeDesc">Enter the name of a Pokémon in lowercase letters only, 
+  or enter the PokéDex number. Only Pokémons 1-807 can be entered.</p>
 </div>
 `
 
@@ -158,7 +171,6 @@ export default class PokeApp extends window.HTMLElement {
     }
     return response.json()
       .then((data) => {
-        console.log(data)
         const order = ['Primary', 'Secondary']
         const types = this.shadowRoot.querySelectorAll('h5')
         const secondary = types[1]
@@ -171,7 +183,11 @@ export default class PokeApp extends window.HTMLElement {
 
         this._descUrl = `https://pokeapi.co/api/v2/pokemon-species/${data.id}`
         this._title.innerText = `#${data.id} ${data.name}`
-        this._img.src = data.sprites.front_default
+        if (!data.sprites.front_default) {
+          this._img.src = '././image/ghost.svg'
+        } else {
+          this._img.src = data.sprites.front_default
+        }
       }).catch((error) => {
         console.error('There has been a problem with your fetch operation:', error)
       })
@@ -197,9 +213,18 @@ export default class PokeApp extends window.HTMLElement {
             englishTextEntries.push(i)
           }
         })
+        const randomIndex = Math.floor(Math.random() * (englishTextEntries.length - 0)) + 0
+        this._description.innerText = this.cleanStr(englishTextEntries[randomIndex].flavor_text)
       }).catch((error) => {
         console.error('There has been a problem with your fetch operation:', error)
       })
+  }
+
+  cleanStr (str) {
+    str.replace(/(?:\r\n|\r|\n)/g, ' ')
+    str.replace(/\r?\n|\r/g, '')
+    str.replace(/[^0-9a-z-A-Z ]/g, '').replace(/ +/, ' ')
+    return str
   }
 }
 
