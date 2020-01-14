@@ -383,6 +383,12 @@ export default class MemoryGame extends window.HTMLElement {
     return array
   }
 
+  /**
+   * Gets a random fact based on the number of tries.
+   *
+   * @returns a fact
+   * @memberof MemoryGame
+   */
   async _winFact () {
     console.log(Math.floor((Math.random() * 4) + 1) - 1)
     const randomIndex = Math.floor((Math.random() * 4) + 1) - 1
@@ -395,9 +401,14 @@ export default class MemoryGame extends window.HTMLElement {
     }
     return response.json()
       .then((data) => {
+        const playAgain = document.createElement('h2')
+        playAgain.innerText = 'Press a button above to play again!'
+
         const fact = document.createElement('h3')
         fact.innerText = data.text
+
         this._gamediv.textContent = ''
+        this._gamediv.appendChild(playAgain)
         this._gamediv.appendChild(fact)
       }).catch((error) => {
         console.error('There has been a problem with your fetch operation:', error)

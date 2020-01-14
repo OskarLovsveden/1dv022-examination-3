@@ -94,7 +94,7 @@ h4, h5 {
 }
 </style>
 <form action="#" id="searchForm">
-  <input type="text" id="searchbar" placeholder="Write here" required>
+  <input type="text" id="searchbar" placeholder="Write here">
   <button id="submitSearch">Search</button>
 </form>
 <div id="pokeDiv">
@@ -106,8 +106,7 @@ h4, h5 {
       <h5 id="pokeType1"></h5>
       <h5 id="pokeType2"></h5>
   </div>
-  <p id="pokeDesc">Enter the name of a Pokémon in lowercase letters only, 
-  or enter the PokéDex number. Only Pokémons 1-807 can be entered.</p>
+  <p id="pokeDesc">Enter the name(lowercase only) or Pokédex number of a Pokémon. Only Pokémon 1 through 807 available.</p>
 </div>
 `
 
@@ -135,7 +134,7 @@ export default class PokeApp extends window.HTMLElement {
   }
 
   connectedCallback () {
-    this._searchbar.setCustomValidity('Enter lowercase names or Dex Number 1-807')
+    this._searchbar.focus()
     this._submitSearch.addEventListener('click', () => {
       if (/\S/.test(this._searchbar.value)) {
         this._pokemonUrl = `https://pokeapi.co/api/v2/pokemon/${this._searchbar.value}`
@@ -144,6 +143,7 @@ export default class PokeApp extends window.HTMLElement {
         this._getDescription()
       }
       this._searchbar.value = ''
+      this._searchbar.focus()
     })
     this._searchForm.addEventListener('keypress', (event) => {
       if (!event.keyCode === 13) {
@@ -154,6 +154,7 @@ export default class PokeApp extends window.HTMLElement {
           this._getDescription()
         }
         this._searchbar.value = ''
+        this._searchbar.focus()
       }
     })
   }
