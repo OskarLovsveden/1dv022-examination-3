@@ -1,11 +1,10 @@
 PWD:
 
 Poke-API:
-- List all Pokémon
-- Searchbar at top to narrow it down using name and number
+- Try to clean strings more to avoid random symbols.
 
 Memory-game:
-- Present something on "winning" game PRIO
+- Present something on "winning" game PRIO (numbersapi for amount of tries?)
 
 Desktop-window:
 
