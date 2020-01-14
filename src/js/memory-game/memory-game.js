@@ -1,4 +1,3 @@
-// Template for the "game-window" within memory-game.
 const gameTemplate = document.createElement('template')
 gameTemplate.innerHTML = `
 <style>
@@ -63,7 +62,6 @@ gameTemplate.innerHTML = `
 </div>
 `
 
-// Template for the tiles.
 const tileTemplate = document.createElement('template')
 tileTemplate.innerHTML = `
 <a href="#"><img src="../../image/memory-game/0.png" alt="A memory tile" /></a>
