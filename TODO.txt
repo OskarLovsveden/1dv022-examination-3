@@ -7,9 +7,6 @@ Memory-game:
 - Present something on "winning" game PRIO (numbersapi for amount of tries?)
 
 Desktop-window:
-focus isnt working as intended. loses focus when clicking elements inside itself.
 
 Chat-app:
-- Add one extended feature. (emojis, chaching message history, change username, etc) PRIO
-- User shouldnt be able to send only white-space
-- Text should always warp
+- Emojis

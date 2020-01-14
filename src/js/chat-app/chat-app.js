@@ -116,18 +116,27 @@ messageTemplate.innerHTML = `
   font-size: 1em;
   margin: 0
 }
-.text {
+.messageBox {
   display: inline-block;
   padding: 3%;
   border-radius: 15px;
   background-color: lightblue;
+}
+.text {
   margin: 0;
-  overflow-wrap: break-word;
+  word-break: break-word;
+}
+.time {
+  font-size: 70%;
+  margin: 0;
 }
 </style>
 <div class="message">
     <p class="author"></p>
-    <p class="text"></p>
+    <div class="messageBox">
+      <p class="text"></p>
+      <p class="time"></p>
+    </div>
 </div>
 `
 
@@ -173,10 +182,10 @@ export default class ChatApp extends window.HTMLElement {
   connectedCallback () {
     this._chatDiv.addEventListener('keypress', (event) => {
       if (event.keyCode === 13) {
-        if (this._usernameInput.value) {
+        if (/\S/.test(this._usernameInput.value)) {
           this._submitUsername()
         }
-        if (this._messageArea.value) {
+        if (/\S/.test(this._messageArea.value)) {
           this._sendMessage(this._messageArea.value)
           this._messageArea.value = ''
         }
@@ -186,10 +195,10 @@ export default class ChatApp extends window.HTMLElement {
 
     this._chatDiv.addEventListener('click', (event) => {
       if (event.target.nodeName === 'BUTTON') {
-        if (this._usernameInput.value) {
+        if (/\S/.test(this._usernameInput.value)) {
           this._submitUsername()
         }
-        if (this._messageArea.value) {
+        if (/\S/.test(this._messageArea.value)) {
           this._sendMessage(this._messageArea.value)
           this._messageArea.value = ''
         }
@@ -277,6 +286,9 @@ export default class ChatApp extends window.HTMLElement {
       this._socket.addEventListener('message', (event) => {
         const message = JSON.parse(event.data)
         if (message.type === 'message') {
+          const date = new Date()
+          const timeStamp = `${date.getHours()}:${date.getMinutes()}`
+          message.time = timeStamp
           this._printMessage(message)
         }
       })
@@ -316,6 +328,7 @@ export default class ChatApp extends window.HTMLElement {
 
     newMessage.querySelector('.author').textContent = `${message.username}:`
     newMessage.querySelector('.text').textContent = message.data
+    newMessage.querySelector('.time').textContent = message.time
 
     this._messagesDiv.appendChild(newMessage)
     this._scrollDown(this._messagesDiv)

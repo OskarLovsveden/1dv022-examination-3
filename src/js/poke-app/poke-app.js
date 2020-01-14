@@ -142,18 +142,18 @@ export default class PokeApp extends window.HTMLElement {
         this._descUrl = `https://pokeapi.co/api/v2/pokemon-species/${this._searchbar.value}`
         this._getPokemon()
         this._getDescription()
-        this._searchbar.value = ''
       }
+      this._searchbar.value = ''
     })
     this._searchForm.addEventListener('keypress', (event) => {
-      if (event.keyCode === 13) {
+      if (!event.keyCode === 13) {
         if (/\S/.test(this._searchbar.value)) {
           this._pokemonUrl = `https://pokeapi.co/api/v2/pokemon/${this._searchbar.value}`
           this._descUrl = `https://pokeapi.co/api/v2/pokemon-species/${this._searchbar.value}`
           this._getPokemon()
           this._getDescription()
-          this._searchbar.value = ''
         }
+        this._searchbar.value = ''
       }
     })
   }
