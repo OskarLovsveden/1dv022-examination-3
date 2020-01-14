@@ -18,7 +18,6 @@ desktopWindowTemplate.innerHTML = `
 }
 :host(:focus) {
   outline: none;
-  z-index: 1; 
 }
 header {
   position: absolute;
@@ -137,7 +136,7 @@ export default class DesktopWindow extends window.HTMLElement {
   }
 
   static get observedAttributes () {
-    return ['name', 'src', 'tabindex']
+    return ['name', 'src', 'id']
   }
 
   attributeChangedCallback (attributes, oldValue, newValue) {
@@ -149,9 +148,9 @@ export default class DesktopWindow extends window.HTMLElement {
       case 'src':
         this._appIcon.setAttribute('src', newValue)
         break
-      case 'tabindex':
-        this.style.left = (this.tabIndex * 10) + 'px'
-        this.style.top = (this.tabIndex * 10) + 'px'
+      case 'id':
+        this.style.left = (this.id * 10) + 'px'
+        this.style.top = (this.id * 10) + 'px'
         break
     }
   }

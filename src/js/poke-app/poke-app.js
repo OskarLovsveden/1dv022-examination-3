@@ -13,7 +13,7 @@ pokeAppTemplate.innerHTML = `
   font-variant: normal;
   text-transform: none;
 }
-#searchDiv {
+#searchForm {
   width: 100%;
   display: inline-flex;
   flex-direction: column;
@@ -23,14 +23,14 @@ pokeAppTemplate.innerHTML = `
   top: 0;
   left: 0;
 }
-#searchDiv input {
+#searchForm input {
   width: 80%;
   padding: 12px 20px;
   margin: 8px 0;
   border: 1px solid #ccc;
   box-sizing: border-box;
 }
-#searchDiv button {
+#searchForm button {
   width: 80%;
   background-color: lightseagreen;
   color: white;
@@ -93,10 +93,10 @@ h4, h5 {
   align-items: center;
 }
 </style>
-<div id="searchDiv">
-  <input type="text" id="searchbar" placeholder="Write here">
+<form action="#" id="searchForm">
+  <input type="text" id="searchbar" placeholder="Write here" required>
   <button id="submitSearch">Search</button>
-</div>
+</form>
 <div id="pokeDiv">
   <h4 id="pokeTitle"></h4>
   <div id="pokeDivTopRight">
@@ -120,7 +120,7 @@ export default class PokeApp extends window.HTMLElement {
     })
     this.shadowRoot.appendChild(pokeAppTemplate.content.cloneNode(true))
 
-    this._searchDiv = this.shadowRoot.querySelector('#searchDiv')
+    this._searchForm = this.shadowRoot.querySelector('#searchForm')
     this._searchbar = this.shadowRoot.querySelector('#searchbar')
     this._submitSearch = this.shadowRoot.querySelector('#submitSearch')
 
@@ -135,7 +135,7 @@ export default class PokeApp extends window.HTMLElement {
   }
 
   connectedCallback () {
-    this._searchbar.focus()
+    this._searchbar.setCustomValidity('Enter lowercase names or Dex Number 1-807')
     this._submitSearch.addEventListener('click', () => {
       if (/\S/.test(this._searchbar.value)) {
         this._pokemonUrl = `https://pokeapi.co/api/v2/pokemon/${this._searchbar.value}`
@@ -145,7 +145,7 @@ export default class PokeApp extends window.HTMLElement {
         this._searchbar.value = ''
       }
     })
-    this._searchDiv.addEventListener('keypress', (event) => {
+    this._searchForm.addEventListener('keypress', (event) => {
       if (event.keyCode === 13) {
         if (/\S/.test(this._searchbar.value)) {
           this._pokemonUrl = `https://pokeapi.co/api/v2/pokemon/${this._searchbar.value}`
@@ -220,10 +220,15 @@ export default class PokeApp extends window.HTMLElement {
       })
   }
 
+  /**
+   * "Cleans" a string to get rid of new lines.
+   *
+   * @param {String} str - The string to "clean"
+   * @returns A string without newlines
+   * @memberof PokeApp
+   */
   cleanStr (str) {
-    str.replace(/(?:\r\n|\r|\n)/g, ' ')
-    str.replace(/\r?\n|\r/g, '')
-    str.replace(/[^0-9a-z-A-Z ]/g, '').replace(/ +/, ' ')
+    str.replace(/\n/g, '')
     return str
   }
 }
