@@ -8,6 +8,7 @@ desktopUiTemplate.innerHTML = `
     font-style: normal;
     font-variant: normal;
     text-transform: none;
+    overflow: hidden;
   }
 </style>
 <div id="desktop">

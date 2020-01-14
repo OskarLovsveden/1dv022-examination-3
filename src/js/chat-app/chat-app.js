@@ -287,7 +287,9 @@ export default class ChatApp extends window.HTMLElement {
         const message = JSON.parse(event.data)
         if (message.type === 'message') {
           const date = new Date()
-          const timeStamp = `${date.getHours()}:${date.getMinutes()}`
+          const hour = `0${date.getHours()}`.slice(-2)
+          const minute = `0${date.getMinutes()}`.slice(-2)
+          const timeStamp = `${hour}:${minute}`
           message.time = timeStamp
           this._printMessage(message)
         }
