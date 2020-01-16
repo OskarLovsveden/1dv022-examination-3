@@ -1,5 +1,5 @@
 import { gameTemplate, tileTemplate } from './memory-game-template.js'
-import { fisherYatesShuffle, getFact } from '../utils/utils.js'
+import { fisherYatesShuffle, getFact } from './utils.js'
 
 /**
  *  A Class representing a game of Memory
@@ -293,7 +293,14 @@ export default class MemoryGame extends window.HTMLElement {
     return arr
   }
 
+  /**
+   * Takes an object as parameter and prints the data in the app.
+   *
+   * @param {Object} data - The data to print in the app.
+   * @memberof MemoryGame
+   */
   printData (data) {
+    console.log(typeof data)
     const playAgain = document.createElement('h2')
     playAgain.innerText = 'Press a button above to play again!'
 
