@@ -1,42 +1,17 @@
-const desktopTaskbarTemplate = document.createElement('template')
-desktopTaskbarTemplate.innerHTML = `
-<style>
-:host {
-    font-family: Verdana, sans-serif;
-    color: #000000;
-    text-decoration: none;
-    font-style: normal;
-    font-variant: normal;
-    text-transform: none;
-  }
-#desktopTaskbar {
-    bottom: 0;
-    left: 0;
-    position: fixed;
-    width: 100%;
-    background-color: rgba(255,255,255,0.5);
-}
+import { desktopTaskbarTemplate } from './desktop-template.js'
 
-#desktopTaskbar img {
-  width: 50px;
-  -webkit-transform: scale(1);
-  transform: scale(1);
-  -webkit-transition: .3s ease-in-out;
-  transition: .3s ease-in-out;
-}
-#desktopTaskbar img:hover {
-  -webkit-transform: scale(1.3);
-  transform: scale(1.3);
-}
-</style>
-<div id="desktopTaskbar">
-      <img id="chat-app" src="./image/chat.svg" alt="chat bubble">
-      <img id="memory-game" src="./image/grid.svg" alt="grid">
-      <img id="poke-app" src="./image/search.svg" alt="search">
-  </div>
-`
-
+/**
+ * Web-component for a desktop taskbar
+ *
+ * @export
+ * @class DesktopTaskbar
+ * @extends {window.HTMLElement}
+ */
 export default class DesktopTaskbar extends window.HTMLElement {
+  /**
+   * Creates an instance of DesktopTaskbars.
+   * @memberof DesktopTaskbar
+   */
   constructor () {
     super()
 
@@ -48,6 +23,7 @@ export default class DesktopTaskbar extends window.HTMLElement {
     this._desktopTaskbar = this.shadowRoot.querySelector('#desktopTaskbar')
   }
 
+  /** Adds event listeners for clicking an icon in the taskbar */
   connectedCallback () {
     this._desktopTaskbar.addEventListener('click', (event) => {
       if (event.target.nodeName === 'IMG') {
