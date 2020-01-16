@@ -1,21 +1,17 @@
-const desktopUiTemplate = document.createElement('template')
-desktopUiTemplate.innerHTML = `
-<style>
-:host {
-    font-family: Verdana, sans-serif;
-    color: #000000;
-    text-decoration: none;
-    font-style: normal;
-    font-variant: normal;
-    text-transform: none;
-    overflow: hidden;
-  }
-</style>
-<div id="desktop">
-</div>
-`
+import { desktopUiTemplate } from './desktop-template.js'
 
+/**
+ * Web-component for a desktop UI
+ *
+ * @export
+ * @class DesktopUI
+ * @extends {window.HTMLElement}
+ */
 export default class DesktopUI extends window.HTMLElement {
+  /**
+   * Creates an instance of DesktopUI.
+   * @memberof DesktopUI
+   */
   constructor () {
     super()
 
@@ -37,6 +33,10 @@ export default class DesktopUI extends window.HTMLElement {
     this._windowCounter = 0
   }
 
+  /**
+   * Creates and appends a taskbar to the UI.
+   * Adds event listeners to the taskbar for iconclicked, determining what app to open.
+  */
   connectedCallback () {
     const newTaskbar = document.createElement('desktop-taskbar')
 
