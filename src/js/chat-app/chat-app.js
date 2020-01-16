@@ -1,144 +1,4 @@
-const chatAppTemplate = document.createElement('template')
-chatAppTemplate.innerHTML = `
-<style>
-:host {
-  font-family: Verdana, sans-serif;
-  color: #000000;
-  text-decoration: none;
-  font-style: normal;
-  font-variant: normal;
-  text-transform: none;
-}
-#chatDiv {
-  text-align: center;
-  width: 100%;
-  height: 100%;
-}
-#messages {
-  width: 100%;
-  height: 70%;
-  background-color: white;
-  overflow: auto;
-  display: inline-block;
-}
-::-webkit-scrollbar {
-    width: 1em;
-}
-::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
-}
-::-webkit-scrollbar-thumb {
-  background-color: darkgrey;
-  outline: 1px solid slategrey;
-}
-#messageSend {
-  width: 100%;
-  height: 30%;
-  text-align: center;
-  display: inline-block;
-}
-#messageSend textarea {
-  width: 95%;
-  height: 55%;
-  display: inline-block;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-  resize: none;
-}
-#messageSend button {
-  background-color: lightseagreen;
-  color: white;
-  padding: 14px 20px;
-  border: none;
-  cursor: pointer;
-  width: 95%;
-}
-#messageSend button:hover {
-  opacity: 0.8;
-}
-#usernameDiv {
-  display: inline-flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: white;
-}
-#usernameDiv input {
-  width: 80%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
-#usernameDiv button {
-  background-color: lightseagreen;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
-  width: 80%;
-}
-#usernameDiv button:hover {
-  opacity: 0.8;
-}
-.hidden {
-  display: none !important;
-}
-</style>
-<div id="chatDiv">
-  <div id="messages">
-  </div>
-  <div id="messageSend">
-    <textarea id="messageArea"></textarea>
-    <button>Send</button>
-  </div>
-  <div id="usernameDiv">
-    <input id="usernameInput" type="text" placeholder="Enter username">
-    <button>Enter Chat</button>
-  </div>
-</div>
-`
-
-const messageTemplate = document.createElement('template')
-messageTemplate.innerHTML = `
-<style>
-.message {
-  margin: 1%;
-  text-align: left;
-}
-.author {
-  font-size: 1em;
-  margin: 0
-}
-.messageBox {
-  display: inline-block;
-  padding: 3%;
-  border-radius: 15px;
-  background-color: lightblue;
-}
-.text {
-  margin: 0;
-  word-break: break-word;
-}
-.time {
-  font-size: 70%;
-  margin: 0;
-}
-</style>
-<div class="message">
-    <p class="author"></p>
-    <div class="messageBox">
-      <p class="text"></p>
-      <p class="time"></p>
-    </div>
-</div>
-`
+import { chatAppTemplate, messageTemplate } from './chat-app-template.js'
 
 /**
  * Custom element for a chat application.
@@ -179,6 +39,7 @@ export default class ChatApp extends window.HTMLElement {
     this._channel = ''
   }
 
+  /** Adds event listeners for click and keypress(enter) to submit username or the message. */
   connectedCallback () {
     this._chatDiv.addEventListener('keypress', (event) => {
       if (event.keyCode === 13) {
@@ -315,7 +176,7 @@ export default class ChatApp extends window.HTMLElement {
     this._connect().then((socket) => {
       socket.send(JSON.stringify(data))
     }).catch((error) => {
-      console.log('Something went wrong', error)
+      console.error('Something went wrong', error)
     })
   }
 
