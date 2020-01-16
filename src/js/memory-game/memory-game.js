@@ -1,71 +1,5 @@
-const gameTemplate = document.createElement('template')
-gameTemplate.innerHTML = `
-<style>
-  :host {
-    font-family: Verdana, sans-serif;
-    color: #000000;
-    text-decoration: none;
-    font-style: normal;
-    font-variant: normal;
-    text-transform: none;
-  }
-  #optionsDiv {
-    padding-top: 10px;
-    text-align: center;
-  }
-  #optionsDiv button {
-    background-color: lightseagreen;
-    color: white;
-    padding: 10px 20px;
-    margin: 0 10px;
-    border: none;
-    cursor: pointer;
-  }
-  #optionsDiv button:hover {
-    opacity: 0.8;
-  }
-  #triesDiv {
-    text-align: center;
-  }
-  #triesDiv h4 {
-    margin-top: 3%;
-    margin-bottom: 3%;
-  }
-  #gamediv {
-    text-align: center
-  }
-  #gamediv img {
-    width: 65px;
-  }
-  a {
-    border-radius: 3%;
-  }
-  a:focus {
-    background-color: lightseagreen;
-    outline: none;
-  }
-  .removed {
-    visibility: hidden;
-  }
-</style>
-<div id="optionsDiv">
-  <button data-rows="2" data-cols="2" id="twoTwo">2 x 2</button>
-  <button data-rows="2" data-cols="4" id="twoFour">2 x 4</button>
-  <button data-rows="4" data-cols="4" id="fourFour">4 x 4</button>
-</div>
-<div id="triesDiv">
-  <h4 id="tries">
-    Number of tries: 0
-  </h4>
-</div>
-<div id="gamediv">
-</div>
-`
-
-const tileTemplate = document.createElement('template')
-tileTemplate.innerHTML = `
-<a href="#"><img src="../../image/memory-game/0.png" alt="A memory tile" /></a>
-`
+import { gameTemplate, tileTemplate } from './memory-game-template.js'
+import { fisherYatesShuffle, getFact } from '../utils/utils.js'
 
 /**
  *  A Class representing a game of Memory
@@ -94,7 +28,6 @@ export default class MemoryGame extends window.HTMLElement {
 
     this._rows = null
     this._cols = null
-
     this._tiles = []
     this._turn1 = null
     this._turn2 = null
@@ -104,12 +37,13 @@ export default class MemoryGame extends window.HTMLElement {
     this._pairs = 0
     this._index = 0
     this._tileLimit = 0
-
-    this._winUrl = 'http://numbersapi.com/'
-    this._winArr = ['trivia', 'math', 'date', 'year']
     this._winCondition = 0
   }
 
+  /**
+   * Adds event listener click for starting/resetting game or turning gametiles.
+   * Adds event listener keydown for moving between tiles.
+   */
   connectedCallback () {
     this._optionsDiv.addEventListener('click', event => {
       this._tiles = []
@@ -299,7 +233,7 @@ export default class MemoryGame extends window.HTMLElement {
       if (tile === this._lastTile) {
         this._pairs += 1
         if (this._pairs === this._winCondition) {
-          this._winFact()
+          getFact(this._tries, this.printData.bind(this))
         }
         this._pair(300)
       } else {
@@ -355,62 +289,20 @@ export default class MemoryGame extends window.HTMLElement {
       arr.push(i)
     }
 
-    this.fisherYatesShuffle(arr)
-    // this.fisherYatesShuffle(arr)
+    fisherYatesShuffle(arr)
     return arr
   }
 
-  /**
-   * Takes an array of numbers and returns it shuffled.
-   *
-   * @param {[Array]} - An array of numbers.
-   * @returns A the passed array shuffled.
-   * @memberof MemoryGame
-   */
-  fisherYatesShuffle (array) {
-    let m = array.length
+  printData (data) {
+    const playAgain = document.createElement('h2')
+    playAgain.innerText = 'Press a button above to play again!'
 
-    while (m) {
-      const i = Math.floor(Math.random() * m--)
+    const fact = document.createElement('h3')
+    fact.innerText = data.text
 
-      const t = array[m]
-      array[m] = array[i]
-      array[i] = t
-    }
-
-    return array
-  }
-
-  /**
-   * Gets a random fact based on the number of tries.
-   *
-   * @returns a fact
-   * @memberof MemoryGame
-   */
-  async _winFact () {
-    console.log(Math.floor((Math.random() * 4) + 1) - 1)
-    const randomIndex = Math.floor((Math.random() * 4) + 1) - 1
-    const category = this._winArr[randomIndex]
-    console.log(`${this._winUrl}${this._tries}/${category}`)
-
-    const response = await window.fetch(`${this._winUrl}${this._tries}/${category}?json`)
-    if (!response.ok) {
-      throw new Error('Network response was not ok')
-    }
-    return response.json()
-      .then((data) => {
-        const playAgain = document.createElement('h2')
-        playAgain.innerText = 'Press a button above to play again!'
-
-        const fact = document.createElement('h3')
-        fact.innerText = data.text
-
-        this._gamediv.textContent = ''
-        this._gamediv.appendChild(playAgain)
-        this._gamediv.appendChild(fact)
-      }).catch((error) => {
-        console.error('There has been a problem with your fetch operation:', error)
-      })
+    this._gamediv.textContent = ''
+    this._gamediv.appendChild(playAgain)
+    this._gamediv.appendChild(fact)
   }
 }
 
