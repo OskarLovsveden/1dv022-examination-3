@@ -22,23 +22,24 @@ export default class DesktopUI extends window.HTMLElement {
 
     this._windowOrder = []
 
-    this.shadowRoot.addEventListener('click', (event) => {
+    this.shadowRoot.addEventListener('mousedown', (event) => {
       if (event.target.nodeName === 'DESKTOP-WINDOW') {
-        const windows = this.shadowRoot.querySelectorAll('desktop-window')
-        for (let i = 0; i < windows.length; i++) {
-          windows[i].style.zIndex = '0'
-        }
-        event.target.style.zIndex = '1'
-
         const index = this._windowOrder.indexOf(parseInt(event.target.id))
         const copy = this._windowOrder[index]
         this._windowOrder.splice(index, 1)
         this._windowOrder.splice(0, 0, copy)
+
+        let counter = 0
+        for (let i = this._windowOrder.length - 1; i >= 0; i--) {
+          const windowID = this._windowOrder[i]
+          const currWindow = this.shadowRoot.getElementById(windowID)
+          currWindow.style.zIndex = counter
+          counter++
+        }
       }
     })
 
     this._desktopUI = this.shadowRoot.querySelector('#desktop')
-
     this._windowCounter = 0
   }
 
@@ -51,11 +52,16 @@ export default class DesktopUI extends window.HTMLElement {
 
     newTaskbar.addEventListener('iconclicked', (event) => {
       const newWindow = document.createElement('desktop-window')
+      newWindow.addEventListener('closewindow', event => {
+        const index = this._windowOrder.indexOf(parseInt(event.detail.id))
+        this._windowOrder.splice(index, 1)
+      })
       newWindow.setAttribute('name', event.detail.name)
       newWindow.setAttribute('src', event.detail.src)
       newWindow.tabIndex = -1
       newWindow.id = this._windowCounter
-      this._windowOrder.push(this._windowCounter)
+      newWindow.style.zIndex = this._windowOrder.length
+      this._windowOrder.unshift(this._windowCounter)
 
       this._desktopUI.appendChild(newWindow)
 
