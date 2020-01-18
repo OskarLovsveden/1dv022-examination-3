@@ -73,6 +73,11 @@ export default class DesktopWindow extends window.HTMLElement {
     })
 
     this._closeBtn.addEventListener('click', () => {
+      this.dispatchEvent(new window.CustomEvent('closewindow', {
+        detail: {
+          id: this.id
+        }
+      }))
       this.parentNode.removeChild(this)
     })
   }
