@@ -20,12 +20,21 @@ export default class DesktopUI extends window.HTMLElement {
     })
     this.shadowRoot.appendChild(desktopUiTemplate.content.cloneNode(true))
 
-    this.shadowRoot.addEventListener('mousedown', (event) => {
-      const windows = this.shadowRoot.querySelectorAll('desktop-window')
-      for (let i = 0; i < windows.length; i++) {
-        windows[i].style.zIndex = '0'
+    this._windowOrder = []
+
+    this.shadowRoot.addEventListener('click', (event) => {
+      if (event.target.nodeName === 'DESKTOP-WINDOW') {
+        const windows = this.shadowRoot.querySelectorAll('desktop-window')
+        for (let i = 0; i < windows.length; i++) {
+          windows[i].style.zIndex = '0'
+        }
+        event.target.style.zIndex = '1'
+
+        const index = this._windowOrder.indexOf(parseInt(event.target.id))
+        const copy = this._windowOrder[index]
+        this._windowOrder.splice(index, 1)
+        this._windowOrder.splice(0, 0, copy)
       }
-      event.target.style.zIndex = '1'
     })
 
     this._desktopUI = this.shadowRoot.querySelector('#desktop')
@@ -46,6 +55,7 @@ export default class DesktopUI extends window.HTMLElement {
       newWindow.setAttribute('src', event.detail.src)
       newWindow.tabIndex = -1
       newWindow.id = this._windowCounter
+      this._windowOrder.push(this._windowCounter)
 
       this._desktopUI.appendChild(newWindow)
 
