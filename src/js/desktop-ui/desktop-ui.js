@@ -59,13 +59,23 @@ export default class DesktopUI extends window.HTMLElement {
       newWindow.setAttribute('name', event.detail.name)
       newWindow.setAttribute('src', event.detail.src)
       newWindow.tabIndex = -1
-      newWindow.id = this._windowCounter
+
+      if (this._windowOrder.length < this._windowCounter) {
+        for (let i = 0; i < this._windowCounter; i++) {
+          if (!this._windowOrder.includes(i)) {
+            this._windowOrder.splice(0, 0, i)
+            newWindow.id = i
+            break
+          }
+        }
+      } else {
+        this._windowOrder.unshift(this._windowCounter)
+        newWindow.id = this._windowCounter
+        this._windowCounter++
+      }
+
       newWindow.style.zIndex = this._windowOrder.length
-      this._windowOrder.unshift(this._windowCounter)
-
       this._desktopUI.appendChild(newWindow)
-
-      this._windowCounter++
     })
     this._desktopUI.appendChild(newTaskbar)
   }
